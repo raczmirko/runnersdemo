@@ -8,14 +8,20 @@ import org.springframework.stereotype.Component;
 public class DataLoader implements CommandLineRunner {
 
     private final RunnerRepository runnerRepository;
+    private final ShoeRepository shoeRepository;
 
     @Autowired
-    public DataLoader(RunnerRepository runnerRepository) {
+    public DataLoader(RunnerRepository runnerRepository, ShoeRepository shoeRepository) {
         this.runnerRepository = runnerRepository;
+        this.shoeRepository = shoeRepository;
     }
 
     @Override
     public void run(String... args) {
+        ShoeEntity shoeEntity = new ShoeEntity();
+        shoeEntity.setShoeName("Jordan 1 - Lost And Found");
+        shoeRepository.save(shoeEntity);
+
         // create default runner entity
         RunnerEntity runnerEntity = new RunnerEntity();
         runnerEntity.setRunnerName("Tomi");
@@ -35,8 +41,13 @@ public class DataLoader implements CommandLineRunner {
 
         runnerEntity.getLaptimes().add(laptime1);
         runnerEntity.getLaptimes().add(laptime2);
+        runnerEntity.setShoe(shoeEntity);
 
         runnerRepository.save(runnerEntity);
+
+        ShoeEntity shoeEntity2 = new ShoeEntity();
+        shoeEntity2.setShoeName("Yeezy 350 v1 - Pirate Black");
+        shoeRepository.save(shoeEntity2);
 
         RunnerEntity runnerEntity2 = new RunnerEntity();
         runnerEntity2.setRunnerName("Zsuzsi");
@@ -56,8 +67,13 @@ public class DataLoader implements CommandLineRunner {
 
         runnerEntity2.getLaptimes().add(laptime3);
         runnerEntity2.getLaptimes().add(laptime4);
+        runnerEntity2.setShoe(shoeEntity2);
 
         runnerRepository.save(runnerEntity2);
+
+        ShoeEntity shoeEntity3 = new ShoeEntity();
+        shoeEntity3.setShoeName("Adidas Stan Smith");
+        shoeRepository.save(shoeEntity3);
 
         RunnerEntity runnerEntity3 = new RunnerEntity();
         runnerEntity3.setRunnerName("Pál");
@@ -77,6 +93,7 @@ public class DataLoader implements CommandLineRunner {
 
         runnerEntity3.getLaptimes().add(laptime5);
         runnerEntity3.getLaptimes().add(laptime6);
+        runnerEntity3.setShoe(shoeEntity3);
 
         runnerRepository.save(runnerEntity3);
     }

@@ -23,6 +23,10 @@ public class RunnerEntity {
         return shoe;
     }
 
+    public void setShoe(ShoeEntity shoe) {
+        this.shoe = shoe;
+    }
+
     public RunnerEntity() {
     }
 
