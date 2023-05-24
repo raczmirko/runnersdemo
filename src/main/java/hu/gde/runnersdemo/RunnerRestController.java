@@ -14,11 +14,15 @@ public class RunnerRestController {
     @Autowired
     private LapTimeRepository lapTimeRepository;
     private RunnerRepository runnerRepository;
+    private ShoeRepository shoeRepository;
 
     @Autowired
-    public RunnerRestController(RunnerRepository runnerRepository, LapTimeRepository lapTimeRepository) {
+    public RunnerRestController(RunnerRepository runnerRepository,
+                                LapTimeRepository lapTimeRepository, ShoeRepository shoeRepository) {
         this.runnerRepository = runnerRepository;
         this.lapTimeRepository = lapTimeRepository;
+        this.shoeRepository = shoeRepository;
+
     }
 
     @GetMapping("/{id}")
@@ -78,6 +82,20 @@ public class RunnerRestController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Runner with ID " + id + " not found");
         }
     }
+
+    @PostMapping("/{id}/setshoe")
+    public ResponseEntity setShoe(@PathVariable Long id, @RequestBody ShoeRequest shoeRequest) {
+        RunnerEntity runner = runnerRepository.findById(id).orElse(null);
+        ShoeEntity shoe = shoeRepository.findById(shoeRequest.getShoeId()).orElse(null);
+        if(runner != null && shoe != null) {
+            runner.setShoe(shoe);
+            runnerRepository.save(runner);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Runner with ID " + id + " not found");
+        }
+    }
+
     public static class LapTimeRequest {
         private int lapTimeSeconds;
 
@@ -87,6 +105,18 @@ public class RunnerRestController {
 
         public void setLapTimeSeconds(int lapTimeSeconds) {
             this.lapTimeSeconds = lapTimeSeconds;
+        }
+    }
+
+    public static class ShoeRequest {
+        private long shoeId;
+
+        public long getShoeId() {
+            return shoeId;
+        }
+
+        public void setShoeId(long shoeId) {
+            this.shoeId = shoeId;
         }
     }
 }
