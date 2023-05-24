@@ -42,6 +42,23 @@ public class RunnerRestController {
         }
     }
 
+    @GetMapping("/averageage")
+    public double getAverageAge() {
+        List<RunnerEntity> runners = runnerRepository.findAll();
+        if(runners.size() != 0){
+            int totalAge = 0;
+            int counter = 0;
+            for(RunnerEntity runner : runners){
+                totalAge += runner.getAge();
+                counter++;
+            }
+            return (double) totalAge / counter;
+        }
+        else{
+            return -1.0;
+        }
+    }
+
     @GetMapping("")
     public List<RunnerEntity> getAllRunners() {
         return runnerRepository.findAll();
