@@ -16,6 +16,12 @@ public class RunnerEntity {
     @OneToMany(mappedBy = "runner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LapTimeEntity> laptimes = new ArrayList<>();
 
+    @ManyToOne
+    private ShoeEntity shoe;
+
+    public ShoeEntity getShoe() {
+        return shoe;
+    }
 
     public RunnerEntity() {
     }
